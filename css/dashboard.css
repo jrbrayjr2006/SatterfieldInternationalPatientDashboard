@@ -128,3 +128,8 @@ ul.navbar-right>li>a {
     float: left;
     padding: 10px 15px;
 }
+
+div#controlBtnRow{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
