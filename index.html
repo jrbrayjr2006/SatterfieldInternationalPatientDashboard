@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="satterfieldinternational">
 <head>
 
     <!--<link rel="icon" href="../../favicon.ico"> -->
@@ -25,7 +25,7 @@
     <![endif]-->
 
 </head>
-<body>
+<body ng-controller="patientSurveyController">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -96,7 +96,7 @@
 
             <div id="controlBtnRow" class="row">
                 <div class="col-sm-3">
-                    <button id="refreshBtn" class="btn btn-primary">Refresh</button>
+                    <button id="refreshBtn" class="btn btn-primary" ng-click="getAllPatientSurveys()" type="button">Refresh</button>
                 </div>
                 <div class="col-sm-3">
                     <button id="excelBtn" class="btn btn-primary">Export to Excel</button>
@@ -157,28 +157,28 @@
                         <td>sit</td>
                         <td>05/05/2016</td>
                     </tr>
-                    <tr>
-                        <td>SIH</td>
-                        <td>Shanghai International Hospital</td>
-                        <td>5</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>4</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>6</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>3</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>9</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>8</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                        <td>05/05/2016</td>
+                    <tr ng-repeat="sd in surveyData">
+                        <td>{{sd.site_code}}</td>
+                        <td></td>
+                        <td>{{sd.ervrating}}</td>
+                        <td>{{sd.ervwhyfeeling}}</td>
+                        <td>{{sd.ervcomment}}</td>
+                        <td>{{sd.hfrating}}</td>
+                        <td>{{sd.hfwhyfeeling}}</td>
+                        <td>{{sd.hfcomment}}</td>
+                        <td>{{sd.preoprating}}</td>
+                        <td>{{sd.preopwhyfeeling}}</td>
+                        <td>{{sd.preopcomment}}</td>
+                        <td>{{sd.postoprating}}</td>
+                        <td>{{sd.postopwhyfeeling}}</td>
+                        <td>{{sd.postopcomment}}</td>
+                        <td>{{sd.dischargerating}}</td>
+                        <td>{{sd.dischargewhyfeeling}}</td>
+                        <td>{{sd.dischargecomment}}</td>
+                        <td>{{sd.cvrating}}</td>
+                        <td>{{sd.cvwhyfeeling}}</td>
+                        <td>{{sd.cvcomment}}</td>
+                        <td>{{sd.createdate}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -196,6 +196,8 @@
 <script src="../../assets/js/vendor/holder.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/satterfieldinternational.js"></script>
 </header>
 </body>
 </html>
