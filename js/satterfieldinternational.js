@@ -5,9 +5,9 @@ console.debug("Entering satterfield international application...");
 
 var app = angular.module('satterfieldinternational', []);
 
-//var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
+var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
 //var baseUrl = 'http://www.docsatisfaction.com:8080/satterfieldmedical';
-var baseUrl = 'http://localhost:8080/satterfieldmedical';
+//var baseUrl = 'http://localhost:8080/satterfieldmedical';
 
 app.service('patientSurveyService', function($http, $q, $log) {
     console.debug("Entering services...");
