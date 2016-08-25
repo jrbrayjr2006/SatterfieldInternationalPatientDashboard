@@ -17,7 +17,7 @@ app.service('patientSurveyService', function($http, $q, $log) {
     this.initializeSurvey = function() {
         return {
             site_code: "",
-            site_code: "",
+            encounter_code: "",
             ervrating: "",
             ervwhyfeeling: "",
             ervcomment: "",
@@ -42,7 +42,7 @@ app.service('patientSurveyService', function($http, $q, $log) {
     this.initializeSurveys = function() {
         return [{
             site_code: "",
-            site_code: "",
+            encounter_code: "",
             ervrating: "",
             ervwhyfeeling: "",
             ervcomment: "",

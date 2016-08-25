@@ -111,7 +111,7 @@
                     <thead>
                     <tr>
                         <th>Site Code ID</th>
-                        <th>Institution</th>
+                        <th>Encounter Code</th>
                         <th>Clinic Rating</th>
                         <th>Clinic Why Feeling?</th>
                         <th>Clinic Comments</th>
@@ -136,7 +136,7 @@
                     <tbody>
                     <tr ng-repeat="sd in surveyData">
                         <td>{{sd.site_code}}</td>
-                        <td></td>
+                        <td>{{sd.encounter_code}}</td>
                         <td>{{sd.cvrating}}</td>
                         <td>{{sd.cvwhyfeeling}}</td>
                         <td>{{sd.cvcomment}}</td>
