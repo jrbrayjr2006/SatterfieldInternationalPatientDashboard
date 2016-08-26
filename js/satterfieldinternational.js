@@ -97,6 +97,13 @@ app.service('patientSurveyService', function($http, $q, $log) {
         return deferred.promise;
     };
 
+
+    this.getAllSites = function() {
+        //TODO
+    };
+
+}).service('physicianSurveyService', function($http, $q, $log) {
+    //TODO
 });
 
 app.controller('patientSurveyController', function($log, $scope, patientSurveyService) {
@@ -112,14 +119,24 @@ app.controller('patientSurveyController', function($log, $scope, patientSurveySe
      *
      */
     $scope.getAllPatientSurveys = function() {
-        console.debug("patientSurveyController.getAllPatientSurveys...");
+        console.debug("patientSurveyController.getAllPatientSurveys()...");
         var surveyPromise = patientSurveyService.getAllPatientSurveys();
         surveyPromise.then(function(promise) {
             $scope.surveyData = promise.data;
         });
-        console.debug("At end of patientSurveyController.getAllPatientSurveys...");
+        console.debug("At end of patientSurveyController.getAllPatientSurveys()...");
         console.debug($scope.surveyData);
         console.debug("test");
+    };
+
+    /**
+     *
+     */
+    $scope.getAllSites = function() {
+        console.debug("patientSurveyController.getAllInstitutions()...");
+        var sitePromise = patientSurveyService.getAllSites();
+        //TODO
+        console.debug("At end of patientSurveyController.getAllInstitutions()...");
     };
 
     $scope.logout = function() {
@@ -127,4 +144,6 @@ app.controller('patientSurveyController', function($log, $scope, patientSurveySe
         //TODO
     };
 
+}).controller('physicianSurveyController', function($log, $scope, patientSurveyService){
+    //TODO
 });
