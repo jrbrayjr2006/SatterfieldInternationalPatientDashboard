@@ -103,6 +103,7 @@ app.controller('patientSurveyController', function($log, $scope, patientSurveySe
     console.debug("Entering controller...");
     var survey = this;
     //$scope.institutions = [{organizationKey:'MCNI001',organizationName:'Mercy North Iowa',demo:'DEMO'}];
+    $scope.appTitle = "Satterfield Services International";
     $scope.surveyData = patientSurveyService.initializeSurveys();
     $scope.addInstitutionFormData = {};
     $scope.test = "Satterfield Test";
@@ -119,6 +120,11 @@ app.controller('patientSurveyController', function($log, $scope, patientSurveySe
         console.debug("At end of patientSurveyController.getAllPatientSurveys...");
         console.debug($scope.surveyData);
         console.debug("test");
+    };
+
+    $scope.logout = function() {
+        console.debug("Logout of dashboard...");
+        //TODO
     };
 
 });
