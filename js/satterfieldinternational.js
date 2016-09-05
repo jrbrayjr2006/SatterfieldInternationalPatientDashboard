@@ -99,7 +99,32 @@ app.service('patientSurveyService', function($http, $q, $log) {
 
 
     this.getAllSites = function() {
+
         //TODO
+    };
+
+    this.exportPatientDataToExcel = function() {
+        console.debug("patientSurveyService.exportPatientDataToExcel()...");
+        var deferred = $q.defer();
+        var serviceUrl = baseUrl + '/exportpatienttoexcel';
+        console.debug("The service url is " + serviceUrl);
+        $http({
+            method: 'GET',
+            url: serviceUrl,
+            headers: {'Content-Type': 'application/json'}
+        }).
+        success(function(response) {
+            console.debug("Patient export to Excel successful...");
+            deferred.resolve({data: response.data});
+            data = response.data;
+        }).
+        error(function() {
+            console.error("/exportpatienttoexcel service call failed...");
+            $log.error('Service call failed while performing exportPatientDataToExcel function...');
+            data = "{'message' : 'error'}";
+            deferred.reject(data);
+        });
+        return deferred.promise;
     };
 
 }).service('physicianSurveyService', function($http, $q, $log) {
@@ -137,6 +162,15 @@ app.controller('patientSurveyController', function($log, $scope, patientSurveySe
         var sitePromise = patientSurveyService.getAllSites();
         //TODO
         console.debug("At end of patientSurveyController.getAllInstitutions()...");
+    };
+
+    $scope.exportPatientDataToExcel = function() {
+        console.debug("patientSurveyController.exportPatientDataToExcel()...");
+        var exportPatientPromise = patientSurveyService.exportPatientDataToExcel();
+        exportPatientPromise.then(function(promise) {
+            $scope.surveyData = promise.data;
+        });
+        //TODO
     };
 
     $scope.logout = function() {
