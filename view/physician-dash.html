@@ -1,0 +1,37 @@
+<div class="row" ng-controller="physicianSurveyController">
+    <div class="col-md-10 col-md-offset-2 main">
+        <h1>Physician Survey Data</h1>
+        <p>
+        </p>
+        <button ng-click="getAllSurveys()" class="btn btn-default">Download Data</button>
+
+        <h2><a name="surveydata">Survey Data</a></h2>
+        <code>/getallsurveys/</code>
+        <p>Click <a href="http://www.strawberry23.net:8080/satterfieldmedical/getallsurveys/">here</a> to test survey service</p>
+        <button ng-click="getAllSurveys()" class="btn btn-default" type="button">Show Survey Data</button>
+        <!--<button ng-click="getInstitutions()" class="btn btn-primary" type="button" value="Show">Get Institutions</button> -->
+        <table class="table">
+            <thead>
+            <th>Site Code</th>
+            <th>Rating</th>
+            <th>Why Feeling</th>
+            <th>Comment</th>
+            <th>Create Date</th>
+            </thead>
+            <tr ng-repeat="sd in physicianSurveys">
+                <td>{{sd.site_code}}</td>
+                <td>{{sd.rating}}</td>
+                <td>{{sd.whyfeeling}}</td>
+                <td>{{sd.comment}}</td>
+                <td>{{sd.createdate}}</td>
+            </tr>
+        </table>
+        <h2><a name="exportdata">Export Data</a></h2>
+        <div class="container">
+            <form>
+                <button class="btn btn-primary" type="button" ng-click="exportToExcel()" value="Show">Export To Excel</button>
+                <a href="downloads/survey.xls">Excel Spreadsheet</a>
+            </form>
+        </div>
+    </div>
+</div>
