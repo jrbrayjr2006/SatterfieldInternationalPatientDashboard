@@ -30,7 +30,7 @@
                 <span>Filter by Institution</span>
                 <select class="form-control">
                     <option value="All" selected>Default</option>
-                    <option value="demo">DEMO</option>
+                    <option ng-repeat="inst in institutions" value="{{inst.code}}">{{inst.name}}</option>
                 </select>
             </div>
             <div class="col-sm-6">

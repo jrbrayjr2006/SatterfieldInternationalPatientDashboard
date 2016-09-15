@@ -19,6 +19,7 @@ app
             .when("/patient-dashboard", {templateUrl: urlPrefix + "/view/patient-dash.html"})
             .when("/physician-dashboard", {templateUrl: urlPrefix + "/view/physician-dash.html"})
             .when("/home", {templateUrl: urlPrefix + "/view/welcome.html"})
+            .when("/institutions", {templateUrl: urlPrefix + "/view/institution.html"})
             .otherwise({templateUrl: urlPrefix + "/view/welcome.html"});
     })
     .factory('PatientSurvey', function($q, $http) {
@@ -215,6 +216,7 @@ app
         $scope.surveyData = patientSurveyService.initializeSurveys();
         $scope.patientSurveys = [];
         $scope.physicianSurveys = [];
+        $scope.institutions = [{ "code" : "DEMO", "name" : "Demo Medical" }, { "code" : "SAMP", "name" : "Sample Hospital" }]
         $scope.addInstitutionFormData = {};
         $scope.test = "Satterfield Test";
         $scope.baseUrl = urlPrefix;
@@ -256,6 +258,16 @@ app
             console.debug("Logout of dashboard...");
             location.href = 'login.html';
         };
+
+        $scope.welcome = function() {
+            console.debug("go to welcome screen");
+            location.href = urlPrefix + "/admin.html#/home";
+        }
+
+        $scope.gotoInstitutions = function() {
+            console.debug("go to welcome screen");
+            location.href = urlPrefix + "/admin.html#/institutions";
+        }
 
         PatientSurvey.getAllPatientSurveys().then(function(surveys) {
             $scope.patientSurveys = surveys.data;
