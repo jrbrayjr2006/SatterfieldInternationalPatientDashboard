@@ -34,4 +34,31 @@
 
         </fieldset>
     </form>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <!-- institution listing -->
+            <h2>Institution Listing</h2>
+            <table class="table">
+                <tr>
+                    <th>CODE</th>
+                    <th>NAME</th>
+                    <th>ACTIONS</th>
+                </tr>
+                <tr ng-repeat="inst in institutions">
+                    <td>{{inst.code}}</td>
+                    <td>{{inst.name}}</td>
+                    <td>
+                        <form>
+                            <button class="btn btn-default" type="button">Edit</button>
+                            <button class="btn btn-default" type="button">Delete</button>
+                            <input type="hidden" id="objId" value="{{inst.code}}">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
 </div>

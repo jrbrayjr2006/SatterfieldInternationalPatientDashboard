@@ -59,7 +59,7 @@ app
         var PhysicianSurvey = new Object();
 
         PhysicianSurvey.getAllSurveys = function() {
-            console.debug("Entering surveyService.getAllSurveys...");
+            console.debug("Entering PhysicianSurvey.getAllSurveys...");
             var deferred = $q.defer();
             var serviceUrl = baseUrl + '/getallsurveys';
             console.debug('The URL is ' + serviceUrl);
@@ -80,11 +80,43 @@ app
                 data = "{'message' : 'error'}";
                 deferred.reject(data);
             });
-            console.debug("Exiting surveyService.getAllSurveys...");
+            console.debug("Exiting PhysicianSurvey.getAllSurveys...");
             return deferred.promise;
         };
 
         return PhysicianSurvey;
+    })
+    .factory('Institutions', function($q, $http) {
+        console.debug("Entering institutions factory...");
+        var Institutions = new Object();
+
+        Institutions.getAllInstitutions = function() {
+            console.debug("Entering Institutions.getAllInstitutions()...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/sites';
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getAllInstitutions() function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting Institutions.getAllInstitutions()...");
+            return deferred.promise;
+        };
+
+        return Institutions;
     })
     .service('patientSurveyService', function($http, $q, $log) {
         console.debug("Entering services...");
@@ -208,7 +240,7 @@ app
     .service('physicianSurveyService', function($http, $q, $log) {
         console.debug("physicianSurveyService");
     })
-    .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey) {
+    .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey, Institutions) {
         console.debug("Entering controller...");
         var survey = this;
         //$scope.institutions = [{organizationKey:'MCNI001',organizationName:'Mercy North Iowa',demo:'DEMO'}];
@@ -275,7 +307,14 @@ app
             console.error(error.message);
             $log.error(error.message);
         });
-
+        /*
+        Institutions.getAllInstitutions().then(function(institutions) {
+            $scope.institutions = institutions;
+        }, function(error) {
+            console.error(error.message);
+            $log.error(error.message);
+        });
+        */
     }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey){
         $scope.physicianSurveys = [];
 
