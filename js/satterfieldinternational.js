@@ -119,7 +119,7 @@ app
         return Institutions;
     })
     .service('patientSurveyService', function($http, $q, $log) {
-        console.debug("Entering services...");
+        console.debug("Entering patientSurveyService...");
 
         var data = new Array();
 
@@ -238,17 +238,74 @@ app
 
     })
     .service('physicianSurveyService', function($http, $q, $log) {
-        console.debug("physicianSurveyService");
+        console.debug("Entering physicianSurveyService...");
+    })
+    .service('institutionService', function($http, $q, $log){
+        console.debug("Entering institutionService...");
+
+        /**
+         *
+         * @param formData
+         */
+        this.addInstitution = function(site) {
+            console.debug("Entering surveyService.addInstitution...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/insertsite/' + site.code + '/' + site.name;
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: "GET",
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: $.param(site)
+            }).
+            success(function(response){
+                deferred.resolve({data: response});
+                console.debug(response);
+                console.info("New institution added");
+            }).
+            error(function() {
+                console.error("Error occurred while attempting to add a new institution");
+                $log.error('Error occurred while attempting to add a new institution');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting surveyService.addInstitution...");
+        };
+
+        this.refreshInstitutions = function() {
+            console.debug("Entering Institutions.getAllInstitutions()...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/sites';
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getAllInstitutions() function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting Institutions.getAllInstitutions()...");
+            return deferred.promise;
+        };
     })
     .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey, Institutions) {
         console.debug("Entering controller...");
         var survey = this;
-        //$scope.institutions = [{organizationKey:'MCNI001',organizationName:'Mercy North Iowa',demo:'DEMO'}];
         $scope.appTitle = "Satterfield Services International";
         $scope.surveyData = patientSurveyService.initializeSurveys();
         $scope.patientSurveys = [];
         $scope.physicianSurveys = [];
-        $scope.institutions = [{ "code" : "DEMO", "name" : "Demo Medical" }, { "code" : "SAMP", "name" : "Sample Hospital" }]
+        //$scope.institutions = [{ "code" : "DEMO", "name" : "Demo Medical" }, { "code" : "SAMP", "name" : "Sample Hospital" }]
         $scope.addInstitutionFormData = {};
         $scope.test = "Satterfield Test";
         $scope.baseUrl = urlPrefix;
@@ -316,6 +373,7 @@ app
         });
         */
     }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey){
+        console.debug("Entering physicianSurveyController...");
         $scope.physicianSurveys = [];
 
         PhysicianSurvey.getAllSurveys().then(function(surveys) {
@@ -324,4 +382,34 @@ app
             console.error(error.message);
             $log.error(error.message);
         });
-    });
+    }).controller('institutionController', function($log, $scope, Institutions, institutionService) {
+        console.debug("Entering institutionController...");
+        $scope.institutions = [];
+        $scope.site = {};
+
+        $scope.addInstitution = function(site){
+            console.debug("Entering institutionController.addInstitution()...");
+            $scope.site = site;
+            institutionService.addInstitution(site);
+            console.debug($scope.site);
+            $scope.refreshInstitutions();
+            console.debug("test here...");
+        };
+
+        $scope.refreshInstitutions = function() {
+            var promise = institutionService.refreshInstitutions();
+            promise.then(function(promise) {
+                $scope.institutions = promise.data;
+            });
+        };
+
+        Institutions.getAllInstitutions().then(function(institutions) {
+            console.debug("institutionController.getAllInstitutions()...");
+            $scope.institutions = institutions.data;
+            console.debug($scope.institutions);
+            return institutions.data;
+        }, function(error) {
+            console.error(error.message);
+            $log.error(error.message);
+        });
+});

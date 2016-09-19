@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="institutionController">
     <form class="form-horizontal">
         <fieldset>
 
@@ -9,7 +9,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="code">Institution Code</label>
                 <div class="col-md-4">
-                    <input id="code" name="code" placeholder="Enter code here" class="form-control input-md" required="" type="text">
+                    <input id="code" name="code" placeholder="Enter code here" class="form-control input-md" required="" type="text" ng-model="site.code">
                     <span class="help-block">Institution code should be short</span>
                 </div>
             </div>
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="institutionName">Institution Name</label>
                 <div class="col-md-4">
-                    <input id="institutionName" name="institutionName" placeholder="Enter institution name here" class="form-control input-md" type="text">
+                    <input id="institutionName" name="institutionName" placeholder="Enter institution name here" class="form-control input-md" type="text" ng-model="site.name">
                     <span class="help-block">Use the legal name if possible</span>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="createInstitutionBtn">Create Institution</label>
                 <div class="col-md-8">
-                    <button id="createInstitutionBtn" name="createInstitutionBtn" class="btn btn-success">Create New Institution</button>
+                    <button type="submit" id="createInstitutionBtn" name="createInstitutionBtn" class="btn btn-success" ng-click="addInstitution(site)">Create New Institution</button>
                     <button id="cancelInstBtn" name="cancelInstBtn" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
