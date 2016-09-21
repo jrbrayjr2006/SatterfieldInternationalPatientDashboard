@@ -9,6 +9,8 @@
         <code>/getallsurveys/</code>
         <p>Click <a href="http://www.strawberry23.net:8080/satterfieldmedical/getallsurveys/">here</a> to test survey service</p>
         <button ng-click="getAllSurveys()" class="btn btn-default" type="button">Show Survey Data</button>
+        <button class="btn btn-primary" type="button" ng-click="exportPhysicianDataToExcel()" value="Show">Export To Excel</button>
+        <a href="{{exportUrl}}">Physician Survey Excel Spreadsheet</a>
         <!--<button ng-click="getInstitutions()" class="btn btn-primary" type="button" value="Show">Get Institutions</button> -->
         <table class="table">
             <thead>
@@ -26,12 +28,5 @@
                 <td>{{sd.createdate}}</td>
             </tr>
         </table>
-        <h2><a name="exportdata">Export Data</a></h2>
-        <div class="container">
-            <form>
-                <button class="btn btn-primary" type="button" ng-click="exportToExcel()" value="Show">Export To Excel</button>
-                <a href="downloads/survey.xls">Excel Spreadsheet</a>
-            </form>
-        </div>
     </div>
 </div>

@@ -7,6 +7,10 @@ var app = angular.module('satterfieldinternational', ["ngRoute"]);
 
 var urlPrefix = "/SatterfieldInternationalPatientDashboard";
 
+var rootUrl = "http://www.strawberry23.net";
+
+var commonExportUrl = rootUrl + "/satterfieldmedical/export";
+
 var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
 //var baseUrl = 'http://www.docsatisfaction.com:8080/satterfieldmedical';
 //var baseUrl = 'http://localhost:8080/satterfieldmedical';
@@ -239,6 +243,89 @@ app
     })
     .service('physicianSurveyService', function($http, $q, $log) {
         console.debug("Entering physicianSurveyService...");
+
+        var data = new Array();
+
+        this.initializePhysicianSurvey = function() {
+            return {
+                site_code: "",
+                rating: "",
+                whyfeeling: "",
+                createdate: "",
+                comment: ""
+            };
+        };
+
+        this.initializePhysicianSurveys = function() {
+            return [{
+                site_code: "",
+                createdate: "",
+                whyfeeling: "",
+                rating: "",
+                comment: ""
+            }];
+        };
+
+        this.survey = this.initializePhysicianSurvey();
+
+        /**
+         *
+         * @returns {promise.promise|jQuery.promise|d.promise|promise|jQuery.ready.promise|qFactory.Deferred.promise|*}
+         */
+        this.refreshPhysicianSurveys = function() {
+            console.debug("Entering physicianSurveyService.getAllPhysicianSurveys()...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/getallsurveys';
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getAllPhysicianSurveys() function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting physicianSurveyService.getAllPhysicianSurveys()...");
+            return deferred.promise;
+        };
+
+
+        /**
+         *
+         */
+        this.exportPhysicianDataToExcel = function() {
+            console.debug("Entering physicianSurveyService.exportPhysicianDataToExcel()...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/exportphysiciantoexcel';
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service export data to Excel when calling exportPhysicianDataToExcel function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting physicianSurveyService.exportPhysicianDataToExcel...");
+        };
     })
     .service('institutionService', function($http, $q, $log){
         console.debug("Entering institutionService...");
@@ -301,6 +388,7 @@ app
     .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey, Institutions) {
         console.debug("Entering controller...");
         var survey = this;
+        $scope.exportUrl = commonExportUrl + "/patient_survey.xls";
         $scope.appTitle = "Satterfield Services International";
         $scope.surveyData = patientSurveyService.initializeSurveys();
         $scope.patientSurveys = [];
@@ -372,8 +460,9 @@ app
             $log.error(error.message);
         });
         */
-    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey){
+    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey, physicianSurveyService){
         console.debug("Entering physicianSurveyController...");
+        $scope.exportUrl = commonExportUrl + "/physician_survey.xls";
         $scope.physicianSurveys = [];
 
         PhysicianSurvey.getAllSurveys().then(function(surveys) {
@@ -382,6 +471,13 @@ app
             console.error(error.message);
             $log.error(error.message);
         });
+
+        $scope.exportPhysicianDataToExcel = function() {
+            console.debug("::ENTER:: physicianSurveyController.exportPhysicianDataToExcel()...");
+            physicianSurveyService.exportPhysicianDataToExcel();
+            console.debug("Export complete!");
+        };
+
     }).controller('institutionController', function($log, $scope, Institutions, institutionService) {
         console.debug("Entering institutionController...");
         $scope.institutions = [];
