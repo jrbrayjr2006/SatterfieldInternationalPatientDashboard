@@ -393,6 +393,7 @@ app
         $scope.surveyData = patientSurveyService.initializeSurveys();
         $scope.patientSurveys = [];
         $scope.physicianSurveys = [];
+        $scope.institutions = [];
         //$scope.institutions = [{ "code" : "DEMO", "name" : "Demo Medical" }, { "code" : "SAMP", "name" : "Sample Hospital" }]
         $scope.addInstitutionFormData = {};
         $scope.test = "Satterfield Test";
@@ -464,6 +465,7 @@ app
         console.debug("Entering physicianSurveyController...");
         $scope.exportUrl = commonExportUrl + "/physician_survey.xls";
         $scope.physicianSurveys = [];
+        $scope.institutions = [];
 
         PhysicianSurvey.getAllSurveys().then(function(surveys) {
             $scope.physicianSurveys = surveys.data;

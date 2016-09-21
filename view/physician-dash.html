@@ -3,7 +3,7 @@
         <h1>Physician Survey Data</h1>
         <p>
         </p>
-        <button ng-click="getAllSurveys()" class="btn btn-default">Download Data</button>
+        <button ng-click="getAllSurveys()" class="btn btn-default">Refresh</button>
 
         <h2><a name="surveydata">Survey Data</a></h2>
         <code>/getallsurveys/</code>
@@ -11,7 +11,13 @@
         <button ng-click="getAllSurveys()" class="btn btn-default" type="button">Show Survey Data</button>
         <button class="btn btn-primary" type="button" ng-click="exportPhysicianDataToExcel()" value="Show">Export To Excel</button>
         <a href="{{exportUrl}}">Physician Survey Excel Spreadsheet</a>
-        <!--<button ng-click="getInstitutions()" class="btn btn-primary" type="button" value="Show">Get Institutions</button> -->
+        <form>
+            <label>Filter By Institution</label>
+            <select class="form-control">
+                <option value="All" selected>Default</option>
+                <option ng-repeat="inst in institutions" value="{{inst.code}}">{{inst.name}}</option>
+            </select>
+        </form>
         <table class="table">
             <thead>
             <th>Site Code</th>
