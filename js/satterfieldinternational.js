@@ -413,6 +413,11 @@ app
             console.debug("test");
         };
 
+        $scope.getFilteredPatientSurveysBySite = function(code) {
+            console.debug("patientSurveyController.getFilteredPatientSurveysBySite("+ code + ")...");
+            //TODO call service to get list of sites
+        }
+
         /**
          *
          */
@@ -453,15 +458,18 @@ app
             console.error(error.message);
             $log.error(error.message);
         });
-        /*
+
         Institutions.getAllInstitutions().then(function(institutions) {
-            $scope.institutions = institutions;
+            console.debug("institutionController.getAllInstitutions()...");
+            $scope.institutions = institutions.data;
+            console.debug($scope.institutions);
+            return institutions.data;
         }, function(error) {
             console.error(error.message);
             $log.error(error.message);
         });
-        */
-    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey, physicianSurveyService){
+
+    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey, physicianSurveyService, Institutions){
         console.debug("Entering physicianSurveyController...");
         $scope.exportUrl = commonExportUrl + "/physician_survey.xls";
         $scope.physicianSurveys = [];
@@ -474,11 +482,26 @@ app
             $log.error(error.message);
         });
 
+        $scope.getFilteredPhysicianSurveysBySite = function(code) {
+            console.debug("patientSurveyController.getFilteredPhysicianSurveysBySite("+ code + ")...");
+            //TODO call service to get list of sites
+        }
+
         $scope.exportPhysicianDataToExcel = function() {
             console.debug("::ENTER:: physicianSurveyController.exportPhysicianDataToExcel()...");
             physicianSurveyService.exportPhysicianDataToExcel();
             console.debug("Export complete!");
         };
+
+        Institutions.getAllInstitutions().then(function(institutions) {
+            console.debug("institutionController.getAllInstitutions()...");
+            $scope.institutions = institutions.data;
+            console.debug($scope.institutions);
+            return institutions.data;
+        }, function(error) {
+            console.error(error.message);
+            $log.error(error.message);
+        });
 
     }).controller('institutionController', function($log, $scope, Institutions, institutionService) {
         console.debug("Entering institutionController...");

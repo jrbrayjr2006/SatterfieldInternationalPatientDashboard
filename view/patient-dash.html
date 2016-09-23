@@ -28,10 +28,17 @@
         <div class="row">
             <div class="col-sm-6">
                 <span>Filter by Institution</span>
-                <select class="form-control">
-                    <option value="All" selected>Default</option>
-                    <option ng-repeat="inst in institutions" value="{{inst.code}}">{{inst.name}}</option>
-                </select>
+                <form>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="code">
+                            <option value="All" selected>Default</option>
+                            <option ng-repeat="inst in institutions" value="{{inst.code}}">{{inst.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit" ng-click="getFilteredPatientSurveysBySite(code)">Filter by Site</button>
+                    </div>
+                </form>
             </div>
             <div class="col-sm-6">
             </div>

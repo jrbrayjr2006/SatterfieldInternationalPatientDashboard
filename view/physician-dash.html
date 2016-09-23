@@ -13,10 +13,13 @@
         <a href="{{exportUrl}}">Physician Survey Excel Spreadsheet</a>
         <form>
             <label>Filter By Institution</label>
-            <select class="form-control">
+            <select class="form-control" ng-model="code">
                 <option value="All" selected>Default</option>
                 <option ng-repeat="inst in institutions" value="{{inst.code}}">{{inst.name}}</option>
             </select>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" ng-click="getFilteredPhysicianSurveysBySite(code)">Filter by Site</button>
+            </div>
         </form>
         <table class="table">
             <thead>
