@@ -206,7 +206,34 @@ app
                 data = "{'message' : 'error'}";
                 deferred.reject(data);
             });
-            console.debug("Exiting surveyService.getAllPatientSurveys...");
+            console.debug("Exiting patientSurveyService.getAllPatientSurveys...");
+            return deferred.promise;
+        };
+
+
+        this.getFilteredPatientSurveysBySite = function(code) {
+            console.debug("patientSurveyService.getFilteredPatientSurveysBySite(code)...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/getpatientsurveybysite/' + code;
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getFilteredPatientSurveysBySite(code) function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting patientSurveyService.getFilteredPatientSurveysBySite(code)...");
             return deferred.promise;
         };
 
@@ -295,6 +322,36 @@ app
                 deferred.reject(data);
             });
             console.debug("Exiting physicianSurveyService.getAllPhysicianSurveys()...");
+            return deferred.promise;
+        };
+
+        /**
+         *
+         * @param code
+         */
+        this.getFilteredPhysicianSurveysBySite = function(code) {
+            console.debug("physicianSurveyService.getFilteredPhysicianSurveysBySite()...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/getsurveybysite/' + code;
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getFilteredPhysicianSurveysBySite(code) function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting physicianSurveyService.getFilteredPhysicianSurveysBySite(code)...");
             return deferred.promise;
         };
 
@@ -415,7 +472,11 @@ app
 
         $scope.getFilteredPatientSurveysBySite = function(code) {
             console.debug("patientSurveyController.getFilteredPatientSurveysBySite("+ code + ")...");
-            //TODO call service to get list of sites
+            var surveyPromise = patientSurveyService.getFilteredPatientSurveysBySite(code);
+            surveyPromise.then(function(promise) {
+                $scope.patientSurveys = promise.data;
+            });
+            console.debug($scope.patientSurveys);
         }
 
         /**
@@ -484,8 +545,12 @@ app
 
         $scope.getFilteredPhysicianSurveysBySite = function(code) {
             console.debug("patientSurveyController.getFilteredPhysicianSurveysBySite("+ code + ")...");
-            //TODO call service to get list of sites
-        }
+            var surveyPromise = physicianSurveyService.getFilteredPhysicianSurveysBySite(code);
+            surveyPromise.then(function(promise) {
+                $scope.physicianSurveys = promise.data;
+            });
+            console.debug($scope.physicianSurveys);
+        };
 
         $scope.exportPhysicianDataToExcel = function() {
             console.debug("::ENTER:: physicianSurveyController.exportPhysicianDataToExcel()...");
