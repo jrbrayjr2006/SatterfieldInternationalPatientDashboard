@@ -7,11 +7,13 @@ var app = angular.module('satterfieldinternational', ["ngRoute"]);
 
 var urlPrefix = "/SatterfieldInternationalPatientDashboard";
 
-var rootUrl = "http://www.strawberry23.net";
+var rootUrl = "http://satterfieldsurveyinternational.org";
+//var rootUrl = "http://strawberry23.net";
 
 var commonExportUrl = rootUrl + "/satterfieldmedical/export";
 
-var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
+var baseUrl = 'http://satterfieldsurveyinternational.org:8080/satterfieldmedical';
+//var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
 //var baseUrl = 'http://www.docsatisfaction.com:8080/satterfieldmedical';
 //var baseUrl = 'http://localhost:8080/satterfieldmedical';
 
