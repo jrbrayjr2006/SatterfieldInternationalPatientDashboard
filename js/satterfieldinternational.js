@@ -12,10 +12,10 @@ var rootUrl = "http://satterfieldsurveyinternational.org";
 
 var commonExportUrl = rootUrl + "/satterfieldmedical/export";
 
-var baseUrl = 'http://satterfieldsurveyinternational.org:8080/satterfieldmedical';
+//var baseUrl = 'http://satterfieldsurveyinternational.org:8080/satterfieldmedical';
 //var baseUrl = 'http://www.strawberry23.net:8080/satterfieldmedical';
 //var baseUrl = 'http://www.docsatisfaction.com:8080/satterfieldmedical';
-//var baseUrl = 'http://localhost:8080/satterfieldmedical';
+var baseUrl = 'http://localhost:8080/satterfieldmedical';
 
 app
     .config(function($routeProvider){
@@ -443,6 +443,27 @@ app
             console.debug("Exiting Institutions.getAllInstitutions()...");
             return deferred.promise;
         };
+
+
+        this.deleteInstitution = function(objId) {
+            console.debug("::ENTER:: institutionService.deleteInstitution(objId)");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + "/deletesite/" + objId;
+            $http({
+                method: "POST",
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+            success(function(response){
+                console.info("delete call succeeded for " + objId);
+                deferred.resolve({data: response});
+                console.debug(response);
+            }).error(function() {
+                console.error("delete call failed for " + objId);
+            });
+            console.debug("::EXIT:: institutionService.deleteInstitution(objId)");
+            return deferred.promise;
+        };
     })
     .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey, Institutions) {
         console.debug("Entering controller...");
@@ -589,6 +610,17 @@ app
             promise.then(function(promise) {
                 $scope.institutions = promise.data;
             });
+        };
+
+
+        $scope.deleteInstitution = function(objId) {
+            console.debug("::ENTER:: institutionController.deleteInstitution(" + objId + ")...");
+            var promise = institutionService.deleteInstitution(objId);
+            promise.then(function(promise) {
+                Institutions.getAllInstitutions();  // may remove this later
+            });
+            $scope.refreshInstitutions();
+            console.debug("::EXIT:: institutionController.deleteInstitution(objId)...");
         };
 
         Institutions.getAllInstitutions().then(function(institutions) {
