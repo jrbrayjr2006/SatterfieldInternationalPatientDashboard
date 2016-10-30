@@ -529,12 +529,41 @@ app
         $scope.welcome = function() {
             console.debug("go to welcome screen");
             location.href = urlPrefix + "/admin.html#/home";
-        }
+        };
 
         $scope.gotoInstitutions = function() {
             console.debug("go to welcome screen");
             location.href = urlPrefix + "/admin.html#/institutions";
-        }
+        };
+
+        $scope.setCountryTo = function(country) {
+            console.debug("::ENTER:: patientSurveyController.setCountryTo(country)...");
+            //TODO add on the fly localization here
+            switch(country) {
+                case 'ZH-CN':
+                    country = "Mainland China";
+                    break;
+                case 'ZH-HK':
+                    country = "Hong Kong";
+                    break;
+                case 'ZH-TW':
+                    country = "Taiwan";
+                    break;
+                case 'ZH-SG':
+                    country = "Singapore";
+                    break;
+                case 'KO':
+                    country = "South Korea";
+                    break;
+                case 'JA':
+                    country = "Japan";
+                    break;
+                default:
+                    country = "";
+            }
+            alert("Locale set to " + country + "!");
+            console.debug("::EXIT:: patientSurveyController.setCountryTo(country)...");
+        };
 
         PatientSurvey.getAllPatientSurveys().then(function(surveys) {
             $scope.patientSurveys = surveys.data;
