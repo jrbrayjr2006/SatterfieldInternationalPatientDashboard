@@ -391,12 +391,16 @@ app
 
         /**
          *
+         * <p>
+         *     API: <code>http://localhost:8080/satterfieldmedical/insertsite/2.0/DEMO/Hospital/ZN-SG/physician</code>
+         * </p>
          * @param formData
          */
         this.addInstitution = function(site) {
             console.debug("Entering surveyService.addInstitution...");
             var deferred = $q.defer();
-            var serviceUrl = baseUrl + '/insertsite/' + site.code + '/' + site.name;
+            //var serviceUrl = baseUrl + '/insertsite/' + site.code + '/' + site.name;
+            var serviceUrl = baseUrl + '/insertsite/2.0/' + site.code + '/' + site.name + '/' + site.country + '/' + site.type;
             console.debug('The URL is ' + serviceUrl);
             $http({
                 method: "GET",

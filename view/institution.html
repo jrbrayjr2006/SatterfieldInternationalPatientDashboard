@@ -27,14 +27,14 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="institutionName">Country</label>
                 <div class="col-md-4">
-                    <select id="country" name="country" class="form-control">
-                        <option value="ZZ" selected>Select Country</option>
-                        <option value="US">United States of America</option>
-                        <option value="CA">Canada</option>
-                        <option value="CN">Peoples Republic of China</option>
-                        <option value="HK">Hong Kong</option>
-                        <option value="SG">Singapore</option>
-                        <option value="TW">Taiwan</option>
+                    <select id="country" name="country" class="form-control" ng-model="site.country">
+                        <option value="zz" selected>Select Country</option>
+                        <option value="us">United States of America</option>
+                        <option value="ca">Canada</option>
+                        <option value="zn-cn">Peoples Republic of China</option>
+                        <option value="zn-hk">Hong Kong</option>
+                        <option value="zn-sg">Singapore</option>
+                        <option value="zn-tw">Taiwan</option>
                     </select>
                 </div>
             </div>
@@ -43,9 +43,9 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="institutionName">App Type</label>
                 <div class="col-md-4">
-                    <select id="appType" name="appType" class="form-control">
-                        <option value="pat" selected>Patient App</option>
-                        <option value="phy">Physician App</option>
+                    <select id="appType" name="appType" class="form-control" ng-model="site.type">
+                        <option value="patient" selected>Patient App</option>
+                        <option value="physician">Physician App</option>
                     </select>
                 </div>
             </div>
