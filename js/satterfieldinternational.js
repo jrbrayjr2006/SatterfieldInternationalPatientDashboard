@@ -17,6 +17,8 @@ var commonExportUrl = rootUrl + "/satterfieldmedical/export";
 //var baseUrl = 'http://www.docsatisfaction.com:8080/satterfieldmedical';
 var baseUrl = 'http://localhost:8080/satterfieldmedical';
 
+var localkey = '';
+
 app
     .config(function($routeProvider){
         console.debug("config");
@@ -120,7 +122,37 @@ app
             });
             console.debug("Exiting Institutions.getAllInstitutions()...");
             return deferred.promise;
-        };
+        },
+        /**
+         * <p>
+         *     API: <code>http://localhost:8080/satterfieldmedical/sites/locale/patient/zn-cn</code>
+         * </p>
+         */
+            Institutions.getPatientInstitutionsByLocale = function(locale) {
+                console.debug("Entering Institutions.getPatientInstitutionsByLocale(locale)...");
+                var deferred = $q.defer();
+                var serviceUrl = baseUrl + '/sites/locale/patient/' + locale;
+                console.debug('The URL is ' + serviceUrl);
+                $http({
+                    method: 'GET',
+                    url: serviceUrl,
+                    headers: {'Content-Type': 'application/json'}
+                }).
+                success(function(response) {
+                    console.debug(serviceUrl);
+                    deferred.resolve({data: response.data});
+                    data = response.data;
+                    console.debug(data);  //FOR DEBUG PURPOSES ONLY
+                }).
+                error(function(){
+                    console.error("Service call failure...");
+                    $log.error('Service call failed while performing getPatientInstitutionsByLocale(locale) function...');
+                    data = "{'message' : 'error'}";
+                    deferred.reject(data);
+                });
+                console.debug("Exiting Institutions.getPatientInstitutionsByLocale(locale)...");
+                return deferred.promise;
+            };
 
         return Institutions;
     })
@@ -448,6 +480,32 @@ app
             return deferred.promise;
         };
 
+        this.getPatientInstitutionsByLocale = function(locale) {
+            console.debug("Entering Institutions.getPatientInstitutionsByLocale(locale)...");
+            var deferred = $q.defer();
+            var serviceUrl = baseUrl + '/sites/locale/patient/' + locale;
+            console.debug('The URL is ' + serviceUrl);
+            $http({
+                method: 'GET',
+                url: serviceUrl,
+                headers: {'Content-Type': 'application/json'}
+            }).
+            success(function(response) {
+                console.debug(serviceUrl);
+                deferred.resolve({data: response.data});
+                data = response.data;
+                console.debug(data);  //FOR DEBUG PURPOSES ONLY
+            }).
+            error(function(){
+                console.error("Service call failure...");
+                $log.error('Service call failed while performing getPatientInstitutionsByLocale(locale) function...');
+                data = "{'message' : 'error'}";
+                deferred.reject(data);
+            });
+            console.debug("Exiting Institutions.getPatientInstitutionsByLocale(locale)...");
+            return deferred.promise;
+        };
+
 
         this.deleteInstitution = function(objId) {
             console.debug("::ENTER:: institutionService.deleteInstitution(objId)");
@@ -469,7 +527,7 @@ app
             return deferred.promise;
         };
     })
-    .controller('patientSurveyController', function($log, $scope, patientSurveyService, PatientSurvey, PhysicianSurvey, Institutions) {
+    .controller('patientSurveyController', function($log, $scope, patientSurveyService, institutionService, PatientSurvey, PhysicianSurvey, Institutions) {
         console.debug("Entering controller...");
         var survey = this;
         $scope.exportUrl = commonExportUrl + "/patient_survey.xls";
@@ -482,6 +540,7 @@ app
         $scope.addInstitutionFormData = {};
         $scope.test = "Satterfield Test";
         $scope.baseUrl = urlPrefix;
+        $scope.locale = "zh-cn";
 
         /**
          *
@@ -544,28 +603,39 @@ app
             console.debug("::ENTER:: patientSurveyController.setCountryTo(country)...");
             //TODO add on the fly localization here
             switch(country) {
-                case 'ZH-CN':
-                    country = "Mainland China";
+                case 'zh-cn':
+                    $scope.locale = "Mainland China";
                     break;
-                case 'ZH-HK':
-                    country = "Hong Kong";
+                case 'zh-hk':
+                    $scope.locale = "Hong Kong";
                     break;
-                case 'ZH-TW':
-                    country = "Taiwan";
+                case 'zh-tw':
+                    $scope.locale = "Taiwan";
                     break;
-                case 'ZH-SG':
-                    country = "Singapore";
+                case 'zh-sg':
+                    $scope.locale = "Singapore";
                     break;
-                case 'KO':
-                    country = "South Korea";
+                case 'ko':
+                    $scope.locale = "South Korea";
                     break;
-                case 'JA':
-                    country = "Japan";
+                case 'ja':
+                    $scope.locale = "Japan";
                     break;
                 default:
-                    country = "";
+                    $scope.locale = "United States of America";
             }
+            localkey = country;
             alert("Locale set to " + country + "!");
+            Institutions.getPatientInstitutionsByLocale(country).then(function(institutions) {
+                console.debug("institutionController.ggetPatientInstitutionsByLocale(country)...");
+                $scope.institutions = institutions.data;
+                console.debug($scope.institutions);
+                return institutions.data;
+            }, function(error) {
+                console.error(error.message);
+                $log.error(error.message);
+            });
+
             console.debug("::EXIT:: patientSurveyController.setCountryTo(country)...");
         };
 
@@ -576,6 +646,7 @@ app
             $log.error(error.message);
         });
 
+        /*
         Institutions.getAllInstitutions().then(function(institutions) {
             console.debug("institutionController.getAllInstitutions()...");
             $scope.institutions = institutions.data;
@@ -585,8 +656,19 @@ app
             console.error(error.message);
             $log.error(error.message);
         });
+        */
 
-    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey, physicianSurveyService, Institutions){
+        Institutions.getPatientInstitutionsByLocale($scope.locale).then(function(institutions) {
+            console.debug("institutionController.ggetPatientInstitutionsByLocale(country)...");
+            $scope.institutions = institutions.data;
+            console.debug($scope.institutions);
+            return institutions.data;
+        }, function(error) {
+            console.error(error.message);
+            $log.error(error.message);
+        });
+
+    }).controller('physicianSurveyController', function($log, $scope, PhysicianSurvey, physicianSurveyService, institutionService, Institutions){
         console.debug("Entering physicianSurveyController...");
         $scope.exportUrl = commonExportUrl + "/physician_survey.xls";
         $scope.physicianSurveys = [];
@@ -645,6 +727,13 @@ app
             });
         };
 
+        $scope.getPatientInstitutionsByLocale = function(locale) {
+            var promise = institutionService.getPatientInstitutionsByLocale(locale);
+            promise.then(function(promise) {
+                $scope.institutions = promise.data;
+            });
+        };
+
 
         $scope.deleteInstitution = function(objId) {
             console.debug("::ENTER:: institutionController.deleteInstitution(" + objId + ")...");
@@ -656,13 +745,26 @@ app
             console.debug("::EXIT:: institutionController.deleteInstitution(objId)...");
         };
 
-        Institutions.getAllInstitutions().then(function(institutions) {
+    if(localkey == '') {
+        Institutions.getAllInstitutions().then(function (institutions) {
             console.debug("institutionController.getAllInstitutions()...");
             $scope.institutions = institutions.data;
             console.debug($scope.institutions);
             return institutions.data;
-        }, function(error) {
+        }, function (error) {
             console.error(error.message);
             $log.error(error.message);
         });
+    } else {
+
+        Institutions.getPatientInstitutionsByLocale(localkey).then(function (institutions) {
+            console.debug("institutionController.ggetPatientInstitutionsByLocale(country)...");
+            $scope.institutions = institutions.data;
+            console.debug($scope.institutions);
+            return institutions.data;
+        }, function (error) {
+            console.error(error.message);
+            $log.error(error.message);
+        });
+    }
 });
