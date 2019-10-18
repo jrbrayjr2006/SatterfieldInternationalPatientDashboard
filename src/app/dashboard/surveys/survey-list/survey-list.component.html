@@ -1,0 +1,21 @@
+<ul>
+    <li class="surveylist">
+        <div class="row">
+        <div class="col-md-2 heading-title">ID</div>
+        <div class="col-md-3 heading-title">Site Code</div>
+        <div class="col-md-3 heading-title">Encounter Code</div>
+        <div class="col-md-2 heading-title">ER Visit Rating</div>
+        <div class="col-md-2 heading-title">Controls</div>
+        </div>
+    </li>
+    <li class="surveylist" *ngFor="let survey of surveys; let i = index">
+        <div class="row">
+        <div class="col-md-2">{{ survey.id | shorten:10 }}</div>
+        <div class="col-md-3">{{ survey.siteCode }}</div>
+        <div class="col-md-3">{{ survey.encounterCode }}</div>
+        <div class="col-md-2">{{ survey.ervRating }}</div>
+        <div class="col-md-1"><button class="btn btn-warning" (click)="onEditSurvey(survey.id, i)">Edit</button></div>
+        <div class="col-md-1"><button class="btn btn-danger" (click)="onDeleteSurvey(survey.id)">X</button></div>
+        </div>
+    </li>
+    </ul>
