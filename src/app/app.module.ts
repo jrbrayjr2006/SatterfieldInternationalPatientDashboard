@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SurveyService } from './dashboard/surveys/survey.service';
@@ -37,6 +38,7 @@ const appRoutes: Routes = [];
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    HttpClientTestingModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [SurveyService],

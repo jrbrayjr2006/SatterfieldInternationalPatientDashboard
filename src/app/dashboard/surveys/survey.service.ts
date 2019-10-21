@@ -19,14 +19,14 @@ export class SurveyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllPatientSurveys() {
+  getAllPatientSurveys(): Observable<Survey[]> {
     console.log("getAllPatientSurveys...");
-    return this.httpClient.get(this.rootUrl + '/getallpatientsurveys', {});
+    return this.httpClient.get<Survey[]>(this.rootUrl + '/getallpatientsurveys', {});
   }
 
   getAllSurveys() {
     console.log("getAllSurveys()...");
-    return this.httpClient.get(this.rootUrl + '/getallsurveys', {});
+    return this.httpClient.get<Survey[]>(this.rootUrl + '/getallsurveys', {});
   }
 
   createNewPatientSurvey(survey: Survey) {

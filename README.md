@@ -118,6 +118,24 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
     to 
     `"node_modules/popper.js/dist/umd/popper.min.js",`.
 
+### Testing with HttpClient
+
+Services that use the HttpClient can be tested with the `HttpClientTestingModule`.
+
+Import the testing module into the application's `app.module.ts` module.
+```javascript
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+...
+...
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ...
+    ...
+    HttpClientTestingModule,
+    ...],
+```
+
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
