@@ -62,13 +62,16 @@ describe('SurveyService', () => {
 
   it('expects service to fetch all patient survey data', inject([ HttpTestingController, SurveyService], 
     ( httpMock: HttpTestingController, service: SurveyService) => {
-    console.warn('Not implemented yet!');
-    // call the service
+      // call the service
+      service.getAllPatientSurveys().subscribe( data => {} );
+      // set expectations for httpMock
+      const req = httpMock.expectOne(service.rootUrl + '/getallpatientsurveys');
+      expect(req.request.method).toEqual('GET');
 
-    // set expectations for httpMock
-
-    // set fake data to be returned from mock
-  }));
+      // set fake data to be returned from mock
+      req.flush( {data: {}} );
+    })
+  );
 
   it('expects service to create patient data', inject([HttpTestingController, SurveyService], 
     (mockHttp: HttpTestingController, service, SurveyService) => {

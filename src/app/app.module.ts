@@ -18,6 +18,7 @@ import { SurveyEditComponent } from './dashboard/survey-edit/survey-edit.compone
 import { FooterComponent } from './footer/footer.component';
 import { SurveyListComponent } from './dashboard/surveys/survey-list/survey-list.component';
 import { ShortenPipe } from './shorten.pipe';
+import { SurveyAddComponent } from './dashboard/surveys/survey-add/survey-add.component';
 
 const appRoutes: Routes = [];
 
@@ -30,7 +31,8 @@ const appRoutes: Routes = [];
     SurveyEditComponent,
     FooterComponent,
     SurveyListComponent,
-    ShortenPipe
+    ShortenPipe,
+    SurveyAddComponent
   ],
   imports: [
     BrowserModule,
