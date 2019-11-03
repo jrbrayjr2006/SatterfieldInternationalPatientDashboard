@@ -136,6 +136,42 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
     ...],
 ```
 
+### PACT Test Dependencies
+
+Add the following PACT development dependencies to the project.
+
+```cmd
+npm install @pact-foundation/pact-node --save-dev
+npm install @pact-foundation/karma-pact --save-dev
+npm install @pact-foundation/pact-web --save-dev
+```
+
+### PACT Modifications to Karma Configuration
+
+Modify the `karma.conf.js` configuration file to include the PACT plugin.
+
+```json
+    plugins: [
+      ...,
+      ...,
+      require('@pact-foundation/karma-pact')
+    ],
+    ...
+    ...
+    pact: [{
+      cors: true,
+      port: 1234,
+      consumer: "survey-ui",
+      provider: "surveyservice",
+      dir: "pacts",
+      spec: 2
+    }],
+    proxies: {
+      '/survey-service/': 'http://127.0.0.1:1234/survey-service/'
+    }
+    ...
+```
+
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).

@@ -31,6 +31,17 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+    pact: [{
+      cors: true,
+      port: 1234,
+      consumer: "survey-ui",
+      provider: "surveyservice",
+      dir: "pacts",
+      spec: 2
+    }],
+    proxies: {
+      '/survey-service/': 'http://127.0.0.1:1234/survey-service/'
+    }
   });
 };
