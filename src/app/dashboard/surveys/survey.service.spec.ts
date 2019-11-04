@@ -1,7 +1,10 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-//import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { PactWeb, Matchers } from "@pact-foundation/pact-web";
 import { SurveyService } from './survey.service';
+import { PhysicianSurvey } from './physician-survey';
+import { Pact } from '@pact-foundation/pact-web/pact';
 
 describe('SurveyService', () => {
   let httpClientSpy:  {get: jasmine.Spy};
@@ -28,10 +31,10 @@ describe('SurveyService', () => {
   it('expects service to fetch survey data', inject([ HttpTestingController, SurveyService ], 
     (httpMock: HttpTestingController, service: SurveyService) => {
       // call the service
-      service.getAllSurveys().subscribe( data => {} );
+      service.getAllPhysicianSurveys().subscribe( data => {} );
 
       // set expectations for httpMock
-      const req = httpMock.expectOne(service.rootUrl + '/getallsurveys');
+      const req = httpMock.expectOne(service.rootUrl + '/getallphysiciansurveys');
       expect(req.request.method).toEqual('GET');
 
       // set fake data to be returned from mock
@@ -84,4 +87,106 @@ describe('SurveyService', () => {
   }));
 });
 
-describe('PACT for survey service API', () => {})
+describe('PACT for survey service API', () => {
+  let provider:PactWeb;
+  beforeAll(function(done) {
+    provider = new PactWeb({
+      consumer: 'survery-ui',
+      provider: 'survey-service',
+      port: 1234,
+      host: 'localhost'
+    });
+
+    // require for slower CI environments
+    setTimeout(done, 2000);
+    //
+    provider.removeInteractions();
+  });
+
+  afterAll(function(done) {
+    provider.finalize()
+    .then(function() {
+      done();
+    }, function(err) {
+      done.fail(err);
+    });
+  });
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule
+      ],
+      providers: [
+        SurveyService
+      ]
+    });
+  });
+
+  afterEach((done) => {
+    provider.verify().then(done, e => done.fail(e));
+  });
+
+  describe('getAllPatientSurveys', () => {});
+
+  describe('getAllPhysicianSurveys', () => {
+    const expectedPhysicianSurveys: PhysicianSurvey[] = [
+      {
+        siteCode: "MAS",
+        encounterCode: "",
+        ervRating: 2,
+        ervWhyFeeling: "",
+        ervComment: "",
+        hfRating: 2,
+        hfWhyFeeling: "",
+        hfComment: "",
+        prepRating: 2,
+        preopWhyFeeling: "",
+        preopComment: "",
+        postopRating: 2,
+        postopWhyFeeling: "",
+        postopcomment: "",
+        dischargewhyfeelin: "",
+        dischargecomment: "",
+        cvrating: 2,
+        cvwhyfeeling: "",
+        cvcomment: "",
+        createdate: ""
+      }
+    ];
+
+    beforeAll((done) => {
+      provider.addInteraction({
+        state: `provider returns list of physician surveys`,
+        uponReceiving: 'a request to GET physician surveys',
+        withRequest: {
+          method: 'GET',
+          path: '/survey-service/getallphysiciansurveys'
+        },
+        willRespondWith: {
+          status: 200,
+          body: Matchers.somethingLike({
+              surveys: expectedPhysicianSurveys
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      }).then(done, error => done.fail(error));
+    });
+
+    it('should get all physician surveys', (done) => {
+      const surveyService: SurveyService = TestBed.get(SurveyService);
+      surveyService.getAllPhysicianSurveys().subscribe(response => {
+        console.info('testing...');
+        done();
+      }, error => {
+        done.fail(error);
+      });
+    });
+
+  });
+
+  describe('createNewPatientSurvey', () => {});
+
+});

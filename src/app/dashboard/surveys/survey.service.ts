@@ -3,33 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
-
-import { Survey } from './survey.model';
+import { Survey } from './survey';
+import { PhysicianSurvey } from './physician-survey';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SurveyService {
-  surveysSubject = new BehaviorSubject<Survey[]>([]);
+  surveysSubject = new BehaviorSubject<PhysicianSurvey[]>([]);
   surveysObservable = this.surveysSubject.asObservable();
-  surveys: Survey[] = [];
-  selectedSurveySubject = new Subject<Survey>();
+  surveys: PhysicianSurvey[] = [];
+  selectedSurveySubject = new Subject<PhysicianSurvey>();
 
-  rootUrl: string = 'http://localhost:8080';
+  rootUrl: string = '/survey-service';
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllPatientSurveys(): Observable<Survey[]> {
+  getAllPatientSurveys(): Observable<PhysicianSurvey[]> {
     console.log("getAllPatientSurveys...");
-    return this.httpClient.get<Survey[]>(this.rootUrl + '/getallpatientsurveys', {});
+    return this.httpClient.get<PhysicianSurvey[]>(this.rootUrl + '/getallpatientsurveys');
   }
 
-  getAllSurveys() {
-    console.log("getAllSurveys()...");
-    return this.httpClient.get<Survey[]>(this.rootUrl + '/getallsurveys', {});
+  getAllPhysicianSurveys() {
+    console.log("getAllPhysicianSurveys()...");
+    return this.httpClient.get<PhysicianSurvey[]>(this.rootUrl + '/getallphysiciansurveys');
   }
 
-  createNewPatientSurvey(survey: Survey) {
+  createNewPatientSurvey(survey: PhysicianSurvey) {
     console.log("createNewPatientSurvey(survey)...");
     //TODO post a new patient survey
   }
