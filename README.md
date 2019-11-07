@@ -136,6 +136,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
     ...],
 ```
 
+### Testing with Routes
+
+Be sure to import the `RouterTestingModule` and the `RouterModule`.
+
+```typescript
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+```
+
 ### PACT Test Dependencies
 
 Add the following PACT development dependencies to the project.

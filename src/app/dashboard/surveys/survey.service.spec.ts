@@ -5,6 +5,7 @@ import { PactWeb, Matchers } from "@pact-foundation/pact-web";
 import { SurveyService } from './survey.service';
 import { PhysicianSurvey } from './physician-survey';
 import { Pact } from '@pact-foundation/pact-web/pact';
+import { PatientSurvey } from './patient-survey';
 
 describe('SurveyService', () => {
   let httpClientSpy:  {get: jasmine.Spy};
@@ -127,7 +128,39 @@ describe('PACT for survey service API', () => {
     provider.verify().then(done, e => done.fail(e));
   });
 
-  describe('getAllPatientSurveys', () => {});
+  describe('getAllPatientSurveys', () => {
+    const expectedPatientSurveys: PatientSurvey[] = [];
+
+    beforeAll((done) => {
+      provider.addInteraction({
+        state: `provider returns list of patient surveys`,
+        uponReceiving: 'a request to GET patient surveys',
+        withRequest: {
+          method: 'GET',
+          path: '/survey-service/getallpatientsurveys'
+        },
+        willRespondWith: {
+          status: 200,
+          body: Matchers.somethingLike({
+              surveys: expectedPatientSurveys
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      }).then(done, error => done.fail(error));
+    });
+
+    it('should get all patient surveys', (done) => {
+      const surveyService: SurveyService = TestBed.get(SurveyService);
+      surveyService.getAllPatientSurveys().subscribe(response => {
+        console.info('testing patient survey retrieval...');
+        done();
+      }, error => {
+        done.fail(error);
+      });
+    });
+  });
 
   describe('getAllPhysicianSurveys', () => {
     const expectedPhysicianSurveys: PhysicianSurvey[] = [
