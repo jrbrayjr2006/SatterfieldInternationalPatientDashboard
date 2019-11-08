@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  opportunities: '/opportunities',
+  patientDetails: '././././data/patientdetail.json',
+  sidebarData: '../data/sidebar.json',
+  periodicData: '../data/periodicdata.json',
+  doughnutchartData: '../data/doughnutchartData.json',
+  patientDemographic: '././././data/patientDemographicData.json',
+  prescriptionProfile: '././././data/patientProfileData.json',
+  oppSummary: '././././data/opportunitySummary.json'
 };
 
 /*

@@ -217,9 +217,7 @@ describe('PACT for survey service API', () => {
         done.fail(error);
       });
     });
-
   });
 
   describe('createNewPatientSurvey', () => {});
-
 });
