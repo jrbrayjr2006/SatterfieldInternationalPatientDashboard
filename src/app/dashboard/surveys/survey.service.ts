@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { Survey } from './survey';
-import { PhysicianSurvey } from './physician-survey';
+import { PhysicianSurvey } from './model/physician-survey';
 
 @Injectable({
   providedIn: 'root'

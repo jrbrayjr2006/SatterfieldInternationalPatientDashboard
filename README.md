@@ -16,6 +16,7 @@ When a request is made by this front-end, a response is expected from the middle
 
 ```json
 {
+    id: "",
     siteCode: "",
     encounterCode: "",
     ervRating: "",

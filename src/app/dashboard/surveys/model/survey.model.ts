@@ -1,23 +1,23 @@
-export class Survey {
+export interface Survey {
 
     id: string;
     siteCode: string;
     encounterCode: string;
-    ervRating: string;
+    ervRating: number;
     ervWhyFeeling: string;
     ervComment: string;
-    hfRating: string;
+    hfRating: number;
     hfWhyFeeling: string;
     hfComment: string;
-    prepRating: string;
+    prepRating: number;
     preopWhyFeeling: string;
     preopComment: string;
-    postopRating: string;
+    postopRating: number;
     postopWhyFeeling: string;
     postopcomment: string;
     dischargewhyfeelin: string;
     dischargecomment: string;
-    cvrating: string;
+    cvrating: number;
     cvwhyfeeling: string;
     cvcomment: string;
     createdate: string;

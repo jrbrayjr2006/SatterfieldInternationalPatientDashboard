@@ -1,6 +1,6 @@
 import { Survey } from './survey';
 
-export class PatientSurvey extends Survey {
+export class PatientSurvey implements Survey {
     siteCode: string;
     encounterCode: string;
     ervRating: string;

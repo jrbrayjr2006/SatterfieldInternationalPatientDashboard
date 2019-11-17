@@ -1,7 +1,7 @@
-import { Survey } from './survey';
+import { Survey } from './survey.model';
 
-export class PhysicianSurvey extends Survey {
-    //
+export class PhysicianSurvey implements Survey {
+    id: string;
     siteCode: string;
     encounterCode: string;
     ervRating: number;

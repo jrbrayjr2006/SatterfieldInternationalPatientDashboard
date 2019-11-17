@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClientModule } from '@angular/common/http';
 import { PactWeb, Matchers } from "@pact-foundation/pact-web";
 import { SurveyService } from './survey.service';
-import { PhysicianSurvey } from './physician-survey';
+import { PhysicianSurvey } from './model/physician-survey';
 import { Pact } from '@pact-foundation/pact-web/pact';
 import { PatientSurvey } from './patient-survey';
 
@@ -40,6 +40,7 @@ describe('SurveyService', () => {
 
       // set fake data to be returned from mock
       req.flush({ data: {
+        id: "my_id",
         siteCode: "",
         encounterCode: "",
         ervRating: "",
@@ -165,6 +166,7 @@ describe('PACT for survey service API', () => {
   describe('getAllPhysicianSurveys', () => {
     const expectedPhysicianSurveys: PhysicianSurvey[] = [
       {
+        id: "physician_id",
         siteCode: "MAS",
         encounterCode: "",
         ervRating: 2,

@@ -19,8 +19,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SurveyListComponent } from './dashboard/surveys/survey-list/survey-list.component';
 import { ShortenPipe } from './shorten.pipe';
 import { SurveyAddComponent } from './dashboard/surveys/survey-add/survey-add.component';
-
-const appRoutes: Routes = [];
+import { InstitutionsComponent } from './dashboard/institutions/institutions.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,8 @@ const appRoutes: Routes = [];
     FooterComponent,
     SurveyListComponent,
     ShortenPipe,
-    SurveyAddComponent
+    SurveyAddComponent,
+    InstitutionsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +40,7 @@ const appRoutes: Routes = [];
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    HttpClientTestingModule,
-    RouterModule.forRoot(appRoutes)
+    HttpClientTestingModule
   ],
   providers: [SurveyService],
   bootstrap: [AppComponent]
