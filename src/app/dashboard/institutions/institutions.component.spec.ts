@@ -28,4 +28,8 @@ describe('InstitutionsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render list, when results returned from service', () => {
+    console.warn("Test not implemented yet!");
+  });
 });

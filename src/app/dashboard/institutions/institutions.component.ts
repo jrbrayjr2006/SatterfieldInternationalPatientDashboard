@@ -13,11 +13,27 @@ export class InstitutionsComponent implements OnInit, OnDestroy {
   institutionsSubscription: Subscription;
   institutions: Institution[];
 
-  constructor(private institutionsService: InstitutionsService) { }
-
-  ngOnInit() {
+  constructor(private institutionsService: InstitutionsService) { 
+    this.institutionsSubscription = this.institutionsService.getAllInstitutions().subscribe(
+      institutions => {
+        this.institutions = institutions;
+      }
+    );
   }
 
-  ngOnDestroy() {}
+  ngOnInit() {
+    this.institutionsSubscription = this.institutionsService.getAllInstitutions().subscribe(
+      data => {
+        this.institutions = data;
+      },
+      error => {
+        console.error("Error retrieving data!");
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.institutionsSubscription.unsubscribe();
+  }
 
 }

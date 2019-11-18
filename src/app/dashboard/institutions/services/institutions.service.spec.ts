@@ -15,3 +15,5 @@ describe('InstitutionsService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+describe('PACT for Institutions service', () => {});
