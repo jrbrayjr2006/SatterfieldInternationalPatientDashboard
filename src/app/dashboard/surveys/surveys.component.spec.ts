@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { SurveyListComponent } from './survey-list/survey-list.component';
+import { ShortenPipe } from '../../shorten.pipe';
 import { SurveysComponent } from './surveys.component';
 
 describe('SurveysComponent', () => {
@@ -8,7 +10,12 @@ describe('SurveysComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SurveysComponent ]
+      declarations: [ 
+        ShortenPipe,
+        SurveyListComponent,
+        SurveysComponent 
+      ],
+      providers: []
     })
     .compileComponents();
   }));

@@ -5,6 +5,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SurveysComponent } from './dashboard/surveys/surveys.component';
+import { SurveyListComponent } from './dashboard/surveys/survey-list/survey-list.component';
+import { ShortenPipe } from './shorten.pipe';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -18,6 +20,8 @@ describe('AppComponent', () => {
         HeaderComponent,
         FooterComponent,
         SurveysComponent,
+        SurveyListComponent,
+        ShortenPipe
       ],
     }).compileComponents();
   }));

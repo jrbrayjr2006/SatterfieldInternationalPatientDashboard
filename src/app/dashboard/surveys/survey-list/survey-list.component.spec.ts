@@ -12,7 +12,8 @@ describe('SurveyListComponent', () => {
       declarations: [ 
         SurveyListComponent,
         ShortenPipe
-      ]
+      ],
+      providers: []
     })
     .compileComponents();
   }));
