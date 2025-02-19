@@ -177,4 +177,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## References
 
+- [Install Tailwind CSS with Angular](https://tailwindcss.com/docs/installation/framework-guides/angular)
 - [Creating a Consumer-Driven Contract with Angular and Pact](https://reflectoring.io/consumer-driven-contracts-with-angular-and-pact/)
