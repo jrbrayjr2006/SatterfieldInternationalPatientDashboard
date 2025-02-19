@@ -133,5 +133,8 @@
         }
       }
     }},
-  "defaultProject": "SatterfieldInternationalPatientDashboard"
+  "defaultProject": "SatterfieldInternationalPatientDashboard",
+  "cli": {
+    "analytics": "2e2bc457-fa57-4188-ab44-77cb9b9822c1"
+  }
 }
