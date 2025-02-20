@@ -92,17 +92,14 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+### Testing Dependencies
+
+```sh
+npm install cypress --save-dev
+```
+
 ### Testing Caveats
 
-- **[Angular 4. Unexpected token export](https://stackoverflow.com/questions/46092871/angular-4-unexpected-token-export):** The `SyntaxError: Unexpected token 'export'` error can occur when including a javascript library such as popper.js as a dependency.  This is a common scenario when Bootstrap is installed with an Angular 4+ application.
-
-    Modify the `angular.json` configuration file's `"test": {"scripts": [[]}` section.  Change the `popper.js` dependency 
-
-    from:
-    `"node_modules/popper.js/dist/popper.min.js"` 
-
-    to 
-    `"node_modules/popper.js/dist/umd/popper.min.js",`.
 
 ### Testing with HttpClient
 
@@ -179,3 +176,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - [Install Tailwind CSS with Angular](https://tailwindcss.com/docs/installation/framework-guides/angular)
 - [Creating a Consumer-Driven Contract with Angular and Pact](https://reflectoring.io/consumer-driven-contracts-with-angular-and-pact/)
+- [Cypress Testing](https://docs.cypress.io/app/get-started/why-cypress)
