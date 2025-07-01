@@ -1,4 +1,6 @@
-# SatterfieldInternationalPatientDashboard
+# SatterfieldInternationalPatientDashboard - ARCHIVE
+
+This repositiory has been superceded by the new [Patient Dashboard](https://github.com/jrbrayjr2006/patient-dashboard.git) repository.  No more updates will be made to this codebase.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
 
